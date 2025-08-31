@@ -7,20 +7,20 @@ from io import BytesIO
 import random
 from keras.layers import TFSMLayer
 from difflib import get_close_matches
-
+#/////POTRZEBNY TWÓJ WŁASNY MODEL (saved_model) KTÓRY MOŻESZ STWORŻYĆ W GOOGLE TEACHABLE MACHINE LUB W PYTHONIE Z TENSORFLOW//////
 # === Discord setup ===
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix="?", intents=intents)
 
-# === Load functional model as a TFSMLayer (Keras 3) ===
-model = TFSMLayer(r"E:\Hackathon\converted_savedmodel\model.savedmodel", call_endpoint="serving_default")
+# === Załaduj funkcjonujący model jako TFSMLayer (Keras 3) ===
+model = TFSMLayer(r"Twój saved_model jako tfsm keras 3", call_endpoint="serving_default")
 
-# === Load labels ===
+# === ładowanie labels=
 with open(r"converted_savedmodel\labels.txt", "r") as f:
     labels = [line.strip() for line in f.readlines()]
 
-#To do 
+#Kategorie
 advice_dict = {
     "Zanieczyszcanie": [
         "🚲 Zamiast jeździć samochodem, spróbuj jeździć rowerem lub korzystać z komunikacji miejskiej.",
@@ -47,7 +47,7 @@ advice_dict = {
     ]
 }
 
-# === Helper function for predictions ===
+# Pomaga do predykcji
 def predict_image(img_array):
     raw_preds = model(img_array)  # output: list of dicts with tensors
     preds = []
@@ -74,7 +74,7 @@ def predict_image(img_array):
 @bot.event
 async def on_ready():
     print(f"✅ Logged in as {bot.user}")
-    channel = bot.get_channel(1408436748362715216)  # Replace with your real channel ID
+    channel = bot.get_channel(twójchannelID)  
     if channel:
         await channel.send(f"Cześć, mam na imię {bot.user}")
         await channel.send("Byłem stworzony, żeby pomóc szerzyć świadomość o zmianie klimatu. 🌍")
@@ -106,18 +106,18 @@ async def predict(ctx):
     img_array = (img_array / 127.5) - 1
     img_array = np.expand_dims(img_array, axis=0)
 
-    # Predict
+    # Predykcje
     predictions = predict_image(img_array)
 
-    # Debug: print raw predictions
+    # Do debugowania: Surowe predykcje
     print("Raw predictions:", predictions)
 
-    # Pick highest confidence
+    # Wybierz największą pewność
     best_pred = max(predictions, key=lambda x: x.get("confidence", x.get("score", 0)))
     class_name = best_pred.get("class_name", best_pred.get("label", "unknown")).strip().lower()
     confidence = best_pred.get("confidence", best_pred.get("score", 0.0))
 
-    # Debug: show class and advice topics
+    # Do debugowania: Pokaż imię klasy i kategori rad
     print("Predicted class_name:", class_name)
     print("Advice topics:", list(advice_dict.keys()))
 
@@ -134,5 +134,6 @@ async def predict(ctx):
         f"(confidence: {confidence*100:.1f}%).\n💡 Rada: {advice}"
     )
 
-# === Run bot ===
-bot.run("MTQwODQyODE4MTQ1ODc4NDI5Nw.Gw0hz6.IY6kLvT1AheRaCebafZLs4wpe_6pbYCOcjri0o")
+# URUCHOM BOTA!!!!
+bot.run("twój_bot_token")
+
