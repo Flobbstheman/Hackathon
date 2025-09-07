@@ -27,7 +27,7 @@ Lista kontrolna testów – bot Discord + google tm
  Działa stabilnie przy kilku użytkownikach jednocześnie.
 
  5. Biblioteki
- Upewnić się, że wszytkie biblioteki(discord, discord.ext, numpy, PIL, requests, BytesIO, Random, TFSM Layers, difflib) są za instalowane, importowane i funkcjonują sprawnie.
+ Upewnić się, że wszytkie biblioteki(discord, discord.ext, numpy, PIL, requests, BytesIO, Random,difflib) są za instalowane, importowane i funkcjonują sprawnie.
 
 Lista poleceń (commands) i ich działanie:
 Preferowany prefiks polecenia "?" zmień w razie potrzeby.
